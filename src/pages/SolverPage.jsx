@@ -29,7 +29,7 @@ const SolverPage = () => {
   const [size, setSize] = useState(3)
   const [matrixValues, setMatrixValues] = useState(createMatrix(3))
   const [vectorValues, setVectorValues] = useState(createVector(3))
-  const [iterSettings, setIterSettings] = useState({ eps: '0.000001', maxIter: '500', initialGuess: createVector(3) })
+  const [iterSettings, setIterSettings] = useState({ epsExp: '-6', maxIter: '500' })
   const [fileData, setFileData] = useState(null)
   const [errors, setErrors] = useState([])
   const [warnings, setWarnings] = useState([])
@@ -54,10 +54,6 @@ const SolverPage = () => {
       }
       return next
     })
-    setIterSettings((prev) => ({
-      ...prev,
-      initialGuess: createVector(newSize),
-    }))
     setWarnings([])
     setErrors([])
     setResult(null)
@@ -111,33 +107,20 @@ const SolverPage = () => {
     return { n, A, B }
   }
 
-  const buildIterativeOptions = (n) => {
-    const eps = Number.parseFloat(iterSettings.eps)
-    if (Number.isNaN(eps) || eps <= 0) {
-      throw new Error('Epsilon must be a positive number.')
+  const buildIterativeOptions = () => {
+    const exponent = Number.parseInt(iterSettings.epsExp, 10)
+    if (Number.isNaN(exponent) || exponent > -1 || exponent < -14) {
+      throw new Error('Epsilon exponent must be between -14 and -1.')
     }
+
+    const eps = 10 ** exponent
 
     const maxIter = Number.parseInt(iterSettings.maxIter, 10)
     if (!Number.isInteger(maxIter) || maxIter <= 0) {
       throw new Error('Max iterations must be a positive integer.')
     }
 
-    const hasGuess = iterSettings.initialGuess.some((v) => v !== '' && v !== undefined)
-    let initialGuess
-    if (hasGuess) {
-      initialGuess = iterSettings.initialGuess.slice(0, n).map((val, idx) => {
-        const num = Number.parseFloat(val)
-        if (Number.isNaN(num)) {
-          throw new Error(`Initial guess entry ${idx + 1} must be numeric.`)
-        }
-        return num
-      })
-      if (initialGuess.length !== n) {
-        throw new Error('Initial guess must have n values.')
-      }
-    }
-
-    return { eps, maxIter, initialGuess }
+    return { eps, maxIter }
   }
 
   const handleSolve = () => {
@@ -172,14 +155,14 @@ const SolverPage = () => {
           solution = cramer(system.A, system.B)
           break
         case 'jacobi': {
-          const options = buildIterativeOptions(system.n)
+          const options = buildIterativeOptions()
           const res = jacobi(system.A, system.B, options)
           solution = res.solution
           iterations = res.iterations
           break
         }
         case 'seidel': {
-          const options = buildIterativeOptions(system.n)
+          const options = buildIterativeOptions()
           const res = seidel(system.A, system.B, options)
           solution = res.solution
           iterations = res.iterations
@@ -208,7 +191,6 @@ const SolverPage = () => {
     setSize(data.n)
     setMatrixValues(data.matrix.map((row) => row.map((v) => v.toString())))
     setVectorValues(data.vector.map((v) => v.toString()))
-    setIterSettings((prev) => ({ ...prev, initialGuess: createVector(data.n) }))
     setResult(null)
   }
 
@@ -258,7 +240,7 @@ const SolverPage = () => {
         <FileLoader onLoad={handleFileLoad} onError={handleFileError} maxSize={MAX_SIZE} />
       )}
 
-      <MethodSettings method={method} size={size} settings={iterSettings} onChange={setIterSettings} />
+      <MethodSettings method={method} settings={iterSettings} onChange={setIterSettings} />
 
       <div className="section-card">
         <div className="flex-between">
@@ -268,9 +250,11 @@ const SolverPage = () => {
               Validate inputs, run the selected algorithm, and verify the residual.
             </p>
           </div>
-          <button className="button" type="button" onClick={handleSolve} disabled={disableSolve}>
-            Solve system
-          </button>
+          <div className="solve-actions">
+            <button className="button solve-button" type="button" onClick={handleSolve} disabled={disableSolve}>
+              Solve system
+            </button>
+          </div>
         </div>
       </div>
 

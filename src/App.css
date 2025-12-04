@@ -144,6 +144,31 @@ main {
   gap: 10px;
 }
 
+.method-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.method-card {
+  padding: 12px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #f8fafc;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+.method-card.selected {
+  border-color: #2563eb;
+  background: #eef2ff;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.12);
+}
+
+.method-card:hover {
+  border-color: #cbd5e1;
+  background: #fff;
+}
+
 .method-hint {
   color: #475569;
   font-size: 14px;
@@ -198,6 +223,35 @@ main {
   background: #ffffff;
   box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
   color: #0f172a;
+}
+
+.no-spinner::-webkit-inner-spin-button,
+.no-spinner::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.no-spinner {
+  -moz-appearance: textfield;
+}
+
+.compact-input {
+  max-width: 120px;
+}
+
+.range {
+  padding: 0;
+  accent-color: #2563eb;
+}
+
+.solve-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.solve-button {
+  max-width: 200px;
+  width: 100%;
 }
 
 @media (max-width: 640px) {

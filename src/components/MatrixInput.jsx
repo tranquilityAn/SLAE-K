@@ -5,15 +5,16 @@ const MatrixInput = ({ size, onSizeChange, matrixValues, vectorValues, onMatrixC
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: `repeat(${size}, minmax(72px, 1fr))`,
+          gridTemplateColumns: `repeat(${size}, minmax(72px, 110px))`,
           gap: '8px',
+          maxWidth: 'fit-content',
         }}
       >
         {Array.from({ length: size }).map((_, row) =>
           Array.from({ length: size }).map((_, col) => (
             <input
               key={`${row}-${col}`}
-              className="input"
+              className="input compact-input no-spinner"
               type="number"
               step="any"
               value={matrixValues[row]?.[col] ?? ''}
@@ -31,14 +32,15 @@ const MatrixInput = ({ size, onSizeChange, matrixValues, vectorValues, onMatrixC
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: `repeat(${Math.min(size, 5)}, minmax(96px, 1fr))`,
+          gridTemplateColumns: `repeat(${Math.min(size, 5)}, minmax(96px, 120px))`,
           gap: '8px',
+          maxWidth: 'fit-content',
         }}
       >
         {Array.from({ length: size }).map((_, idx) => (
           <input
             key={idx}
-            className="input"
+            className="input compact-input no-spinner"
             type="number"
             step="any"
             value={vectorValues[idx] ?? ''}

@@ -1,11 +1,5 @@
-const MethodSettings = ({ method, size, settings, onChange }) => {
+const MethodSettings = ({ method, settings, onChange }) => {
   const isIterative = method === 'jacobi' || method === 'seidel';
-
-  const handleInitialGuessChange = (idx, value) => {
-    const next = [...settings.initialGuess];
-    next[idx] = value;
-    onChange({ ...settings, initialGuess: next });
-  };
 
   if (!isIterative) {
     return (
@@ -29,14 +23,26 @@ const MethodSettings = ({ method, size, settings, onChange }) => {
       </div>
       <div className="controls-grid">
         <label className="stack">
-          <span className="label">Epsilon (stop when ||Δx|| &lt; eps)</span>
-          <input
-            className="input"
-            type="number"
-            step="any"
-            value={settings.eps}
-            onChange={(e) => onChange({ ...settings, eps: e.target.value })}
-          />
+          <span className="label">Epsilon exponent (10^k)</span>
+          <div className="stack" style={{ gap: '6px' }}>
+            <input
+              className="input range"
+              type="range"
+              min="-14"
+              max="-1"
+              step="1"
+              value={settings.epsExp}
+              onChange={(e) => onChange({ ...settings, epsExp: e.target.value })}
+            />
+            <div className="flex-between" style={{ color: '#475569', fontSize: '14px' }}>
+              <span>10^-14</span>
+              <strong style={{ color: '#0f172a' }}>10^{settings.epsExp}</strong>
+              <span>10^-1</span>
+            </div>
+            <p className="method-hint" style={{ margin: 0 }}>
+              Stops when ||Δx|| &lt; 10^{settings.epsExp} ({(10 ** settings.epsExp).toExponential()}).
+            </p>
+          </div>
         </label>
         <label className="stack">
           <span className="label">Max iterations</span>
@@ -48,30 +54,6 @@ const MethodSettings = ({ method, size, settings, onChange }) => {
             onChange={(e) => onChange({ ...settings, maxIter: e.target.value })}
           />
         </label>
-      </div>
-      <div className="stack" style={{ marginTop: '12px' }}>
-        <span className="label">Initial guess (optional)</span>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: `repeat(${Math.min(size, 5)}, minmax(96px, 1fr))`,
-            gap: '8px',
-          }}
-        >
-          {Array.from({ length: size }).map((_, idx) => (
-            <input
-              key={idx}
-              className="input"
-              type="number"
-              step="any"
-              value={settings.initialGuess[idx] ?? ''}
-              onChange={(e) => handleInitialGuessChange(idx, e.target.value)}
-            />
-          ))}
-        </div>
-        <p className="method-hint" style={{ margin: 0 }}>
-          Leave blank to start from the zero vector.
-        </p>
       </div>
     </div>
   );
