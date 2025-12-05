@@ -69,7 +69,7 @@ const FileLoader = ({ onLoad, onError, maxSize }) => {
   return (
     <div className="section-card">
       <h2>File upload</h2>
-      <p className="method-hint">Use the prescribed text format: n, n rows for A, then one row for B.</p>
+      <p className="method-hint" style={{ marginBottom: '10px' }} >Use the prescribed text format: n, n rows for A, then one row for B.</p>
       <div className="stack" style={{ maxWidth: '420px' }}>
         <input type="file" accept=".txt" onChange={handleFileChange} />
         {fileName && <p className="method-hint">Loaded: {fileName}</p>}

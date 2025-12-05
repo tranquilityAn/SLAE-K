@@ -6,9 +6,8 @@ function App() {
     <div className="app-shell">
       <header className="app-header">
         <div>
-          <p className="eyebrow">Numerical methods lab</p>
           <h1>SLAE Solver</h1>
-          <p className="subtitle">Solve linear systems with Gaussian elimination, Cramer, Jacobi, and more.</p>
+          <p className="subtitle">Solve linear systems with Gauss, Gauss-Jordan, Cramer, Jacobi and Seidel methods.</p>
         </div>
       </header>
       <main>

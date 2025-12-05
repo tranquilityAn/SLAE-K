@@ -32,7 +32,7 @@ const MatrixInput = ({ size, onSizeChange, matrixValues, vectorValues, onMatrixC
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: `repeat(${Math.min(size, 5)}, minmax(96px, 120px))`,
+          gridTemplateColumns: `repeat(${Math.min(size, 5)}, minmax(96px, 110px))`,
           gap: '8px',
           maxWidth: 'fit-content',
         }}
@@ -71,7 +71,6 @@ const MatrixInput = ({ size, onSizeChange, matrixValues, vectorValues, onMatrixC
             value={size}
             onChange={(e) => onSizeChange(e.target.value)}
           />
-          <p className="method-hint" style={{ margin: 0 }}>Max size: 10 × 10</p>
         </div>
       </div>
       <div className="stack" style={{ marginTop: '12px' }}>

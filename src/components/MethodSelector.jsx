@@ -1,9 +1,9 @@
 const methods = [
-  { value: 'gauss', label: 'Gaussian elimination' },
+  { value: 'gauss', label: 'Gauss' },
   { value: 'gaussJordan', label: 'Gauss-Jordan' },
-  { value: 'cramer', label: "Cramer's rule" },
-  { value: 'jacobi', label: 'Jacobi (iterative)' },
-  { value: 'seidel', label: 'Gauss-Seidel (iterative)' },
+  { value: 'cramer', label: "Cramer" },
+  { value: 'jacobi', label: 'Jacobi' },
+  { value: 'seidel', label: 'Seidel' },
 ];
 
 const MethodSelector = ({ selected, onChange }) => (

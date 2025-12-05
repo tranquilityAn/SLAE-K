@@ -213,7 +213,7 @@ const SolverPage = () => {
       <div className="section-card">
         <div className="flex-between">
           <h2>Data source</h2>
-          <div className="tabs" role="tablist" aria-label="Input mode">
+          <div className="tabs" role="tablist" aria-label="Input mode" style={{ marginBottom: '10px' }} >
             <button className={`tab ${inputMode === 'manual' ? 'active' : ''}`} type="button" onClick={() => handleInputModeChange('manual')}>
               Manual entry
             </button>
@@ -223,7 +223,7 @@ const SolverPage = () => {
           </div>
         </div>
         <p className="method-hint" style={{ marginBottom: 0 }}>
-          Switch between manual form inputs and loading a formatted text file. Errors and results are cleared when you switch.
+          Switch between manual form inputs and loading a formatted text file.
         </p>
       </div>
 
@@ -243,7 +243,7 @@ const SolverPage = () => {
       <MethodSettings method={method} settings={iterSettings} onChange={setIterSettings} />
 
       <div className="section-card">
-        <div className="flex-between">
+        <div className="flex-between" style={{ justifyContent: 'space-between' }}>
           <div>
             <h2>Solve</h2>
             <p className="method-hint" style={{ margin: 0 }}>

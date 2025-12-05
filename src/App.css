@@ -127,7 +127,7 @@ main {
 
 .flex-between {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   gap: 12px;
 }
@@ -236,7 +236,7 @@ main {
 }
 
 .compact-input {
-  max-width: 120px;
+  max-width: 110px;
 }
 
 .range {
